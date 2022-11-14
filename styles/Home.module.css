@@ -38,7 +38,8 @@
     flex: 1;
     /* border-radius: 10px; */
     background-color: #1976d2;
-    justify-content: center;
+    justify-content: flex-start;
+    align-items: center;
     flex-direction: column;
 }
 
