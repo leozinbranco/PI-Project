@@ -12,6 +12,8 @@ import Image from "next/image";
 import dataBase from "../dataExample";
 import * as React from "react";
 import Form from "../components/form";
+import NewClient from "../components/newClient";
+
 import Snackbar from "@mui/material/Snackbar";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -28,13 +30,31 @@ import {
 const columns = [
   {
     field: "num_OS",
-    headerName: "Nº ordem de serviço",
-    width: 200,
+    headerName: "Nº OS",
+    width: 100,
+    editable: false,
+  },
+  {
+    field: "nome_cliente",
+    headerName: "Nome do cliete",
+    width: 180,
+    editable: true,
+  },
+  {
+    field: "type",
+    headerName: "Tipo",
+    width: 100,
+    editable: true,
+  },
+  {
+    field: "equip",
+    headerName: "Equipamento",
+    width: 240,
     editable: true,
   },
   {
     field: "stts_andamento_OS",
-    headerName: "Andamento",
+    headerName: "Situação",
     width: 130,
     editable: true,
   },
@@ -42,14 +62,25 @@ const columns = [
     field: "date_inicio_OS",
     headerName: "Data início ",
     type: "dateTime",
-    width: 130,
+    width: 110,
     editable: true,
   },
   {
-    field: "date_fim_OS",
-    headerName: "Data fim",
-    type: "dateTime",
-    width: 130,
+    field: "date_mod",
+    headerName: "Ultima modificação",
+    width: 150,
+    editable: true,
+  },
+  {
+    field: "contato_tec",
+    headerName: "Contato técnico",
+    width: 140,
+    editable: true,
+  },
+  {
+    field: "email_tec",
+    headerName: "Email técnico",
+    width: 180,
     editable: true,
   },
 ];
@@ -74,7 +105,8 @@ export default function Home() {
   const mutateRow = useFakeMutation();
   const noButtonRef = React.useRef(null);
   const [promiseArguments, setPromiseArguments] = React.useState(null);
-  const [changeTab, setChangeTab] = React.useState(false);
+  const [changeTabNewUser, setChangeTabNewUser] = React.useState(false);
+  const [changeTabNewOS, setChangeTabNewOs] = React.useState(false);
   const router = useRouter();
   const [snackbar, setSnackbar] = React.useState(null);
 
@@ -85,12 +117,7 @@ export default function Home() {
       new Promise((resolve, reject) => {
         console.log(newRow);
         console.log(randomUpdatedDate);
-        // if (mutation) {
-        // Save the arguments to resolve or reject the promise later
         setPromiseArguments({ resolve, reject, newRow, oldRow });
-        // } else {
-        // resolve(oldRow); // Nothing was changed
-        // }
       }),
     []
   );
@@ -134,7 +161,6 @@ export default function Home() {
     }
 
     const { newRow, oldRow } = promiseArguments;
-    // const mutation = computeMutation(newRow, oldRow);
 
     return (
       <Dialog
@@ -171,7 +197,12 @@ export default function Home() {
             <Divider />
             <List>
               <ListItem>
-                <ListItemButton onClick={() => setChangeTab(false)}>
+                <ListItemButton
+                  onClick={() => {
+                    setChangeTabNewOs(false);
+                    setChangeTabNewUser(false);
+                  }}
+                >
                   <ListItemText
                     style={{ color: "#FFFFF" }}
                     primary={
@@ -183,7 +214,12 @@ export default function Home() {
                 </ListItemButton>
               </ListItem>
               <ListItem>
-                <ListItemButton onClick={() => setChangeTab(true)}>
+                <ListItemButton
+                  onClick={() => {
+                    setChangeTabNewOs(true);
+                    setChangeTabNewUser(false);
+                  }}
+                >
                   <ListItemText
                     style={{ color: "#FFFFF" }}
                     primary={
@@ -195,7 +231,13 @@ export default function Home() {
                 </ListItemButton>
               </ListItem>
               <ListItem>
-                <ListItemButton component="a" href="#newUser">
+                <ListItemButton
+                  component="a"
+                  onClick={() => {
+                    setChangeTabNewOs(false);
+                    setChangeTabNewUser(true);
+                  }}
+                >
                   <ListItemText
                     primary={
                       <Typography type="body2" style={{ color: "#FFFFFF" }}>
@@ -220,27 +262,14 @@ export default function Home() {
               LOGIN
             </Button>
           </div>
-          <div className={styles.btn}>
-            {/* <TextField
-               
-                
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <SearchIcon />
-                    </InputAdornment>
-                  ),
-                }}
-                size="small"
-                className={styles.textFieldLogin}
-              ></TextField> */}
-          </div>
+          <div className={styles.btn}></div>
           <div style={{ paddingLeft: "20px" }}></div>
-          {changeTab ? (
+          {changeTabNewUser || changeTabNewOS ? (
             <div>
               <Divider />
               <div className={styles.divTitle}>
-                Preencha os campos para inserir uma nova OS
+                Preencha os campos para inserir{" "}
+                {changeTabNewUser ? "um novo cliente" : "uma nova OS"}
               </div>
               <div
                 style={{
@@ -262,7 +291,7 @@ export default function Home() {
                       flexDirection: "column",
                     }}
                   >
-                    <Form />
+                    {changeTabNewOS ? <Form /> : <NewClient />}
                   </div>
                 </div>
               </div>
@@ -278,7 +307,6 @@ export default function Home() {
               disableColumnFilter
               disableColumnSelector
               disableDensitySelector
-              // checkboxSelection
               processRowUpdate={processRowUpdate}
               experimentalFeatures={{ newEditingApi: true }}
               rowsPerPageOptions={[5]}
