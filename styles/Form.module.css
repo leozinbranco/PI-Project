@@ -1,0 +1,45 @@
+.centerForm {
+    /* display: flex; */
+    /* justify-content: center;
+    width: 80%;
+    flex-direction: column;
+    padding-top: 20px; */
+    /* display: flex;
+    flex-direction: column;
+    align-self: center;
+    width: 1000px;
+    height: 800px; */
+    display: flex;
+    flex-direction: column;
+    width: 800px;
+}
+.btnSend {
+    /* display: flex; */
+    margin-left: 10px; 
+    margin-right: 10px;
+    /* width: 800px; */
+}
+
+.spaceTextField {
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 100%;
+
+}
+
+.spaceTextFieldTwoLines {
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 100%;
+}
+
+.formFirstLine {
+    display: flex;
+    margin-bottom: 30px;
+    justify-content: space-between;
+}
+.intireLine {
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 100%;
+}

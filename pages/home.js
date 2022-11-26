@@ -1,12 +1,9 @@
 import styles from "../styles/Home.module.css";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import SearchIcon from "@mui/icons-material/Search";
-import InputAdornment from "@mui/material/InputAdornment";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import { DataGrid, GridToolbar, GridFilterItem } from "@mui/x-data-grid";
 import Divider from "@mui/material/Divider";
@@ -14,19 +11,20 @@ import { Typography } from "@mui/material";
 import Image from "next/image";
 import dataBase from "../dataExample";
 import * as React from "react";
+import Form from "../components/form";
 import Snackbar from "@mui/material/Snackbar";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import Alert from "@mui/material/Alert";
-
+import { useRouter } from "next/router";
 
 import {
   randomCreatedDate,
   randomTraderName,
   randomUpdatedDate,
-} from '@mui/x-data-grid-generator';
+} from "@mui/x-data-grid-generator";
 const columns = [
   {
     field: "num_OS",
@@ -72,12 +70,12 @@ const useFakeMutation = () => {
   );
 };
 
-
 export default function Home() {
   const mutateRow = useFakeMutation();
   const noButtonRef = React.useRef(null);
   const [promiseArguments, setPromiseArguments] = React.useState(null);
-
+  const [changeTab, setChangeTab] = React.useState(false);
+  const router = useRouter();
   const [snackbar, setSnackbar] = React.useState(null);
 
   const handleCloseSnackbar = () => setSnackbar(null);
@@ -86,12 +84,12 @@ export default function Home() {
     (newRow, oldRow) =>
       new Promise((resolve, reject) => {
         console.log(newRow);
-        console.log(randomUpdatedDate)
+        console.log(randomUpdatedDate);
         // if (mutation) {
-          // Save the arguments to resolve or reject the promise later
-          setPromiseArguments({ resolve, reject, newRow, oldRow });
+        // Save the arguments to resolve or reject the promise later
+        setPromiseArguments({ resolve, reject, newRow, oldRow });
         // } else {
-          // resolve(oldRow); // Nothing was changed
+        // resolve(oldRow); // Nothing was changed
         // }
       }),
     []
@@ -146,7 +144,7 @@ export default function Home() {
       >
         <DialogTitle>Edição</DialogTitle>
         <DialogContent dividers>
-          {'\nVocẽ tem certeza que deseja editar esse campo?\n'}
+          {"\nVocẽ tem certeza que deseja editar esse campo?\n"}
         </DialogContent>
         <DialogActions>
           <Button ref={noButtonRef} onClick={handleNo}>
@@ -173,7 +171,19 @@ export default function Home() {
             <Divider />
             <List>
               <ListItem>
-                <ListItemButton>
+                <ListItemButton onClick={() => setChangeTab(false)}>
+                  <ListItemText
+                    style={{ color: "#FFFFF" }}
+                    primary={
+                      <Typography type="body2" style={{ color: "#FFFFFF" }}>
+                        Listar Ordens
+                      </Typography>
+                    }
+                  />
+                </ListItemButton>
+              </ListItem>
+              <ListItem>
+                <ListItemButton onClick={() => setChangeTab(true)}>
                   <ListItemText
                     style={{ color: "#FFFFF" }}
                     primary={
@@ -185,11 +195,11 @@ export default function Home() {
                 </ListItemButton>
               </ListItem>
               <ListItem>
-                <ListItemButton component="a" href="#simple-list">
+                <ListItemButton component="a" href="#newUser">
                   <ListItemText
                     primary={
                       <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                        MyTitle
+                        Cadastrar usuário
                       </Typography>
                     }
                   />
@@ -200,15 +210,18 @@ export default function Home() {
         </div>
         <div className={styles.dataContainer}>
           {/* <div className={styles.btn}> */}
-          <div>
-            <div className={styles.btn}>
-              <span className={styles.title}>Ordens de serviço</span>
-              <Button size="large" variant="contained">
-                LOGIN
-              </Button>
-            </div>
-            <div className={styles.btn}>
-              {/* <TextField
+          <div className={styles.btn}>
+            <span className={styles.title}>Ordens de serviço</span>
+            <Button
+              size="large"
+              variant="contained"
+              onClick={() => router.push("/login")}
+            >
+              LOGIN
+            </Button>
+          </div>
+          <div className={styles.btn}>
+            {/* <TextField
                
                 
                 InputProps={{
@@ -221,31 +234,63 @@ export default function Home() {
                 size="small"
                 className={styles.textFieldLogin}
               ></TextField> */}
-            </div>
-            <div style={{ paddingLeft: "20px" }}></div>
           </div>
+          <div style={{ paddingLeft: "20px" }}></div>
+          {changeTab ? (
+            <div>
+              <Divider />
+              <div className={styles.divTitle}>
+                Preencha os campos para inserir uma nova OS
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "flex-start",
+                  justifyContent: "center",
+                  paddingTop: "20px",
+                  flex: 1,
+                }}
+              >
+                <div>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      paddingLeft: "30px",
+                      paddingRight: "30px",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <Form />
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <DataGrid
+              components={{ Toolbar: GridToolbar }}
+              style={{ marginTop: "20px" }}
+              columns={columns}
+              pageSize={5}
+              rows={dataBase}
+              editMode="cell"
+              disableColumnFilter
+              disableColumnSelector
+              disableDensitySelector
+              // checkboxSelection
+              processRowUpdate={processRowUpdate}
+              experimentalFeatures={{ newEditingApi: true }}
+              rowsPerPageOptions={[5]}
+              componentsProps={{
+                toolbar: {
+                  showQuickFilter: true,
+                  quickFilterProps: { debounceMs: 500 },
+                },
+              }}
+            />
+          )}
 
-          <DataGrid
-            components={{ Toolbar: GridToolbar }}
-            style={{ marginTop: "20px" }}
-            columns={columns}
-            pageSize={5}
-            rows={dataBase}
-            editMode="cell"
-            disableColumnFilter
-            disableColumnSelector
-            disableDensitySelector
-            // checkboxSelection
-            processRowUpdate={processRowUpdate}
-            experimentalFeatures={{ newEditingApi: true }}
-            rowsPerPageOptions={[5]}
-            componentsProps={{
-              toolbar: {
-                showQuickFilter: true,
-                quickFilterProps: { debounceMs: 500 },
-              },
-            }}
-          />
           {!!snackbar && (
             <Snackbar
               open
