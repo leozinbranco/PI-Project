@@ -5,6 +5,7 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
+import DialogContentText from "@mui/material/DialogContentText";
 import { DataGrid, GridToolbar, GridFilterItem } from "@mui/x-data-grid";
 import Divider from "@mui/material/Divider";
 import { Typography } from "@mui/material";
@@ -21,6 +22,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import Alert from "@mui/material/Alert";
 import { useRouter } from "next/router";
+import { setCookie, parseCookies } from 'nookies'
 
 import {
   randomCreatedDate,
@@ -35,19 +37,19 @@ const columns = [
     editable: false,
   },
   {
-    field: "nome_cliente",
+    field: "nome_pessoa",
     headerName: "Nome do cliete",
     width: 180,
     editable: true,
   },
   {
-    field: "type",
+    field: "tipo_equip",
     headerName: "Tipo",
     width: 100,
     editable: true,
   },
   {
-    field: "equip",
+    field: "desc_equip",
     headerName: "Equipamento",
     width: 240,
     editable: true,
@@ -66,19 +68,19 @@ const columns = [
     editable: true,
   },
   {
-    field: "date_mod",
+    field: "date_fim_OS",
     headerName: "Ultima modificação",
     width: 150,
     editable: true,
   },
   {
-    field: "contato_tec",
+    field: "ramal_func",
     headerName: "Contato técnico",
     width: 140,
     editable: true,
   },
   {
-    field: "email_tec",
+    field: "email_func",
     headerName: "Email técnico",
     width: 180,
     editable: true,
@@ -105,25 +107,29 @@ export default function Home() {
   const mutateRow = useFakeMutation();
   const noButtonRef = React.useRef(null);
   const [promiseArguments, setPromiseArguments] = React.useState(null);
+  const [dataOs, setDataOs] = React.useState([]);
   const [changeTabNewUser, setChangeTabNewUser] = React.useState(false);
   const [changeTabNewOS, setChangeTabNewOs] = React.useState(false);
   const router = useRouter();
+  const [open, setOpen] = React.useState(false);
   const [snackbar, setSnackbar] = React.useState(null);
 
   const handleCloseSnackbar = () => setSnackbar(null);
 
-  const processRowUpdate = React.useCallback(
-    (newRow, oldRow) =>
-      new Promise((resolve, reject) => {
-        console.log(newRow);
-        console.log(randomUpdatedDate);
-        setPromiseArguments({ resolve, reject, newRow, oldRow });
-      }),
-    []
-  );
+  const handleOpenDialog = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   React.useEffect(() => {
-    console.log(dataBase);
+    fetch("http://localhost:3000/api/getOs/10")
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(">>>", data);
+        setDataOs(data);
+      });
   }, [dataBase]);
 
   const handleNo = () => {
@@ -186,6 +192,23 @@ export default function Home() {
     <main className={styles.page}>
       <div className={styles.floatContainer}>
         <div className={styles.menuContainer}>
+          <Dialog
+            open={open}
+            // TransitionComponent={Transition}
+            keepMounted
+            onClose={handleClose}
+            aria-describedby="alert-dialog-slide-description"
+          >
+            <DialogTitle>{"Use Google's location service?"}</DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-slide-description">
+                OS Inserida com sucesso!
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose}>OK</Button>
+            </DialogActions>
+          </Dialog>
           <Image
             src="/Personal data-rafiki.svg"
             alt="Perfil image"
@@ -302,12 +325,12 @@ export default function Home() {
               style={{ marginTop: "20px" }}
               columns={columns}
               pageSize={5}
-              rows={dataBase}
+              rows={dataOs}
+              getRowId={(row) => row.num_OS}
               editMode="cell"
               disableColumnFilter
               disableColumnSelector
               disableDensitySelector
-              processRowUpdate={processRowUpdate}
               experimentalFeatures={{ newEditingApi: true }}
               rowsPerPageOptions={[5]}
               componentsProps={{

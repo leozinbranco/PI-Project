@@ -11,6 +11,10 @@ import { style } from "@mui/system";
 
 export default function Home() {
   const router = useRouter();
+  handleLogin = () => {
+    fetch('')  // TO DO: Utilizar cookies para armazenar login. 
+  };
+
   return (
     <div className={styles.container}>
       <div style={{ minWidth: "40%", backgroundColor: "#0013FF" }}>
@@ -62,7 +66,7 @@ export default function Home() {
               }}
             >
               <Button
-                onClick={() => router.push("/home")}
+                onClick={handleLogin}
                 style={{
                   display: "flex",
                   justifyContent: "center",

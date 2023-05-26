@@ -116,7 +116,6 @@ export default function Home() {
           <div className={styles.floatContainer}>
             <h1 className={styles.titleForm}>
               Login
-              {/* <a href="https://nextjs.org">Next.js!</a> */}
             </h1>
             <TextField
               label="Login"
