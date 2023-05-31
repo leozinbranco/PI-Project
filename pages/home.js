@@ -22,7 +22,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import Alert from "@mui/material/Alert";
 import { useRouter } from "next/router";
-import { setCookie, parseCookies } from 'nookies'
+import { setCookie, parseCookies } from "nookies";
 
 import {
   randomCreatedDate,
@@ -190,169 +190,165 @@ export default function Home() {
 
   return (
     <main className={styles.page}>
-      <div className={styles.floatContainer}>
-        <div className={styles.menuContainer}>
-          <Dialog
-            open={open}
-            // TransitionComponent={Transition}
-            keepMounted
-            onClose={handleClose}
-            aria-describedby="alert-dialog-slide-description"
-          >
-            <DialogTitle>{"Use Google's location service?"}</DialogTitle>
-            <DialogContent>
-              <DialogContentText id="alert-dialog-slide-description">
-                OS Inserida com sucesso!
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={handleClose}>OK</Button>
-            </DialogActions>
-          </Dialog>
-          <Image
-            src="/Personal data-rafiki.svg"
-            alt="Perfil image"
-            width={200}
-            height={200}
-            style={{ marginTop: "20px" }}
-          />
-          <div style={{ width: "100%" }}>
-            <Divider />
-            <List>
-              <ListItem>
-                <ListItemButton
-                  onClick={() => {
-                    setChangeTabNewOs(false);
-                    setChangeTabNewUser(false);
-                  }}
-                >
-                  <ListItemText
-                    style={{ color: "#FFFFF" }}
-                    primary={
-                      <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                        Listar Ordens
-                      </Typography>
-                    }
-                  />
-                </ListItemButton>
-              </ListItem>
-              <ListItem>
-                <ListItemButton
-                  onClick={() => {
-                    setChangeTabNewOs(true);
-                    setChangeTabNewUser(false);
-                  }}
-                >
-                  <ListItemText
-                    style={{ color: "#FFFFF" }}
-                    primary={
-                      <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                        Criar Nova Ordem
-                      </Typography>
-                    }
-                  />
-                </ListItemButton>
-              </ListItem>
-              <ListItem>
-                <ListItemButton
-                  component="a"
-                  onClick={() => {
-                    setChangeTabNewOs(false);
-                    setChangeTabNewUser(true);
-                  }}
-                >
-                  <ListItemText
-                    primary={
-                      <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                        Cadastrar usuário
-                      </Typography>
-                    }
-                  />
-                </ListItemButton>
-              </ListItem>
-            </List>
-          </div>
-        </div>
-        <div className={styles.dataContainer}>
-          {/* <div className={styles.btn}> */}
-          <div className={styles.btn}>
-            <span className={styles.title}>Ordens de serviço</span>
-            <Button
-              size="large"
-              variant="contained"
-              onClick={() => router.push("/login")}
-            >
-              LOGIN
-            </Button>
-          </div>
-          <div className={styles.btn}></div>
-          <div style={{ paddingLeft: "20px" }}></div>
-          {changeTabNewUser || changeTabNewOS ? (
-            <div>
-              <Divider />
-              <div className={styles.divTitle}>
-                Preencha os campos para inserir{" "}
-                {changeTabNewUser ? "um novo cliente" : "uma nova OS"}
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "flex-start",
-                  justifyContent: "center",
-                  paddingTop: "20px",
-                  flex: 1,
+      {/* <div className={styles.floatContainer}> */}
+      <div className={styles.menuContainer}>
+        <Dialog
+          open={open}
+          // TransitionComponent={Transition}
+          keepMounted
+          onClose={handleClose}
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle>{"Use Google's location service?"}</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-slide-description">
+              OS Inserida com sucesso!
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>OK</Button>
+          </DialogActions>
+        </Dialog>
+        <Image
+          src="/Personal data-rafiki.svg"
+          alt="Perfil image"
+          width={200}
+          height={200}
+          style={{ marginTop: "20px" }}
+        />
+        <div style={{ width: "100%" }}>
+          <Divider />
+          <List>
+            <ListItem>
+              <ListItemButton
+                onClick={() => {
+                  setChangeTabNewOs(false);
+                  setChangeTabNewUser(false);
                 }}
               >
-                <div>
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      paddingLeft: "30px",
-                      paddingRight: "30px",
-                      flexDirection: "column",
-                    }}
-                  >
-                    {changeTabNewOS ? <Form /> : <NewClient />}
-                  </div>
+                <ListItemText
+                  style={{ color: "#FFFFF" }}
+                  primary={
+                    <Typography type="body2" style={{ color: "#FFFFFF" }}>
+                      Listar Ordens
+                    </Typography>
+                  }
+                />
+              </ListItemButton>
+            </ListItem>
+            <ListItem>
+              <ListItemButton
+                onClick={() => {
+                  setChangeTabNewOs(true);
+                  setChangeTabNewUser(false);
+                }}
+              >
+                <ListItemText
+                  style={{ color: "#FFFFF" }}
+                  primary={
+                    <Typography type="body2" style={{ color: "#FFFFFF" }}>
+                      Criar Nova Ordem
+                    </Typography>
+                  }
+                />
+              </ListItemButton>
+            </ListItem>
+            <ListItem>
+              <ListItemButton
+                component="a"
+                onClick={() => {
+                  setChangeTabNewOs(false);
+                  setChangeTabNewUser(true);
+                }}
+              >
+                <ListItemText
+                  primary={
+                    <Typography type="body2" style={{ color: "#FFFFFF" }}>
+                      Cadastrar usuário
+                    </Typography>
+                  }
+                />
+              </ListItemButton>
+            </ListItem>
+          </List>
+        </div>
+      </div>
+      <div className={styles.dataContainer}>
+        {/* <div className={styles.btn}> */}
+        <div className={styles.btn}>
+          <span className={styles.title}>Ordens de serviço</span>
+          <Button
+            size="large"
+            variant="contained"
+            onClick={() => router.push("/login")}
+          >
+            LOGIN
+          </Button>
+        </div>
+        <div className={styles.btn}></div>
+        <div style={{ paddingLeft: "20px" }}></div>
+        {changeTabNewUser || changeTabNewOS ? (
+          <div>
+            <Divider />
+            <div className={styles.divTitle}>
+              Preencha os campos para inserir{" "}
+              {changeTabNewUser ? "um novo cliente" : "uma nova OS"}
+            </div>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "flex-start",
+                justifyContent: "center",
+                paddingTop: "20px",
+                flex: 1,
+              }}
+            >
+              <div>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    paddingLeft: "30px",
+                    paddingRight: "30px",
+                    flexDirection: "column",
+                  }}
+                >
+                  {changeTabNewOS ? <Form /> : <NewClient />}
                 </div>
               </div>
             </div>
-          ) : (
-            <DataGrid
-              components={{ Toolbar: GridToolbar }}
-              style={{ marginTop: "20px" }}
-              columns={columns}
-              pageSize={5}
-              rows={dataOs}
-              getRowId={(row) => row.num_OS}
-              editMode="cell"
-              disableColumnFilter
-              disableColumnSelector
-              disableDensitySelector
-              experimentalFeatures={{ newEditingApi: true }}
-              rowsPerPageOptions={[5]}
-              componentsProps={{
-                toolbar: {
-                  showQuickFilter: true,
-                  quickFilterProps: { debounceMs: 500 },
-                },
-              }}
-            />
-          )}
+          </div>
+        ) : (
+          <DataGrid
+            components={{ Toolbar: GridToolbar }}
+            style={{ marginTop: "20px" }}
+            columns={columns}
+            pageSize={5}
+            rows={dataOs}
+            getRowId={(row) => row.num_OS}
+            editMode="cell"
+            disableColumnFilter
+            disableColumnSelector
+            disableDensitySelector
+            experimentalFeatures={{ newEditingApi: true }}
+            rowsPerPageOptions={[5]}
+            componentsProps={{
+              toolbar: {
+                showQuickFilter: true,
+                quickFilterProps: { debounceMs: 500 },
+              },
+            }}
+          />
+        )}
 
-          {!!snackbar && (
-            <Snackbar
-              open
-              onClose={handleCloseSnackbar}
-              autoHideDuration={6000}
-            >
-              <Alert {...snackbar} onClose={handleCloseSnackbar} />
-            </Snackbar>
-          )}
-        </div>
+        {!!snackbar && (
+          <Snackbar open onClose={handleCloseSnackbar} autoHideDuration={6000}>
+            <Alert {...snackbar} onClose={handleCloseSnackbar} />
+          </Snackbar>
+        )}
       </div>
+      {/* </div> */}
       {renderConfirmDialog()}
       {!!snackbar && (
         <Snackbar open onClose={handleCloseSnackbar} autoHideDuration={6000}>

@@ -12,7 +12,8 @@ import { style } from "@mui/system";
 export default function Home() {
   const router = useRouter();
   handleLogin = () => {
-    fetch('')  // TO DO: Utilizar cookies para armazenar login. 
+    // fetch('')  // TO DO: Utilizar cookies para armazenar login.
+    console.log("Clicou");
   };
 
   return (

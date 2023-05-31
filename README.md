@@ -1,7 +1,7 @@
 
 # Projeto Next.js
 
-Este é um projeto Next.js criado com `create-next-app`.
+Este é um projeto Next.js criado com `create-next-app`, para um trabalho de faculdade com objetivo de melhorar o processo da empresa Apoio Informatica.
 
 ## Primeiros Passos
 
@@ -35,6 +35,7 @@ Confira também o repositório do [Next.js no GitHub](https://github.com/vercel/
 A forma mais fácil de implantar seu aplicativo Next.js é usar a [Plataforma Vercel](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme), criadora do Next.js.
 
 Consulte nossa [documentação de implantação do Next.js](https://nextjs.org/docs/deployment) para mais detalhes.
+
 
 ## Executando o Container Docker
 Para buildar a imagem do container mysql baseado no arquivo `CreateDatabase.sql`. Use o comando `docker build`
