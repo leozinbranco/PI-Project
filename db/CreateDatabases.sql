@@ -13,9 +13,9 @@ flag_exclui_pessoa BOOLEAN
 )AUTO_INCREMENT = 10; 
 
 CREATE TABLE Funcionario ( 
-id_pessoa integer unique not null, 
-matricula_func integer unique not null AUTO_INCREMENT, 
-cpf_func VARCHAR(14) unique not null, 
+id_pessoa INTEGER UNIQUE NOT NULL, 
+matricula_func INTEGER UNIQUE NOT NULL AUTO_INCREMENT, 
+cpf_func VARCHAR(14) UNIQUE NOT NULL, 
 tipo_func VARCHAR(20), 
 ramal_func VARCHAR(13), 
 email_func VARCHAR(30), 
@@ -24,21 +24,21 @@ FOREIGN KEY(id_pessoa) REFERENCES Pessoa (id_pessoa)
 )AUTO_INCREMENT = 1011; 
 
 CREATE TABLE Clientes ( 
-id_pessoa integer unique not null, 
+id_pessoa INTEGER UNIQUE NOT NULL, 
 flag_contrato_cliente boolean, 
 FOREIGN KEY(id_pessoa) REFERENCES Pessoa (id_pessoa) 
 ); 
 
 CREATE TABLE Fisica ( 
-id_pessoa integer unique not null, 
-cpf_fisica VARCHAR(14) unique not null, 
+id_pessoa INTEGER UNIQUE NOT NULL, 
+cpf_fisica VARCHAR(14) UNIQUE NOT NULL, 
 sexo VARCHAR(10), 
 FOREIGN KEY(id_pessoa) REFERENCES Pessoa (id_pessoa) 
 ); 
 
 CREATE TABLE Juridica ( 
-id_pessoa integer unique not null, 
-cnpj_juridica VARCHAR(18) unique not null, 
+id_pessoa INTEGER UNIQUE NOT NULL, 
+cnpj_juridica VARCHAR(18) UNIQUE NOT NULL, 
 nome_fantasia_jurid VARCHAR(50), 
 inscricao_estad_jurid VARCHAR(12), 
 FOREIGN KEY(id_pessoa) REFERENCES Pessoa (id_pessoa) 
@@ -47,8 +47,8 @@ FOREIGN KEY(id_pessoa) REFERENCES Pessoa (id_pessoa)
  
 
 CREATE TABLE Equipamentos ( 
-id_pessoa integer not null, 
-num_serie_equip VARCHAR(25) PRIMARY KEY not null, 
+id_pessoa INTEGER NOT NULL, 
+num_serie_equip VARCHAR(25) PRIMARY KEY NOT NULL, 
 desc_equip VARCHAR(200), 
 tipo_equip VARCHAR(45), 
 avaria_equip VARCHAR(50), 
@@ -58,14 +58,14 @@ FOREIGN KEY(id_pessoa) REFERENCES Pessoa (id_pessoa)
 
 CREATE TABLE Ordem_Servico ( 
 num_OS INTEGER(10) PRIMARY KEY AUTO_INCREMENT, 
-id_pessoa integer not null, 
+id_pessoa INTEGER NOT NULL, 
 num_serie_equip VARCHAR(25), 
 date_inicio_OS DATE, 
 desc_servico_OS VARCHAR(300), 
 stts_andamento_OS VARCHAR(25), 
 date_fim_OS DATE, 
 data_ult_update_OS DATE, 
-matricula_func integer, 
+matricula_func INTEGER, 
 flag_exclui_OS BOOLEAN, 
 FOREIGN KEY(num_serie_equip) REFERENCES Equipamentos (num_serie_equip), 
 FOREIGN KEY(matricula_func) REFERENCES Funcionario (matricula_func), 
@@ -140,21 +140,21 @@ insert into Fisica(id_pessoa,cpf_fisica,Sexo) values (16,'26816724821','M');
 
 -- INSERINDO EQUIPAMENTO PARA TESTES 
 
-insert into Equipamentos(id_pessoa,num_serie_equip,desc_equip,tipo_equip,avaria_equip) values (11,'PE082E35V67','Lenovo thinkpad i5 10GEN 16GB RAM SSD 256GB','Notebook','Sem avarias'); 
+insert into Equipamentos(id_pessoa,num_serie_equip,desc_equip,tipo_equip,avaria_equip) values (11,'PE082E35V67','Lenovo thinkpad i5 10GEN 16GB RAM SSD 256GB','NOTebook','Sem avarias'); 
 
-insert into Equipamentos(id_pessoa,num_serie_equip,desc_equip,tipo_equip,avaria_equip) values (12,'QXE48Z2','Dell Inspiron 7432, i7 8GEN 8GB RAM SSD 2480GB','Notebook','Sem avarias'); 
+insert into Equipamentos(id_pessoa,num_serie_equip,desc_equip,tipo_equip,avaria_equip) values (12,'QXE48Z2','Dell Inspiron 7432, i7 8GEN 8GB RAM SSD 2480GB','NOTebook','Sem avarias'); 
 
 insert into Equipamentos(id_pessoa,num_serie_equip,desc_equip,tipo_equip,avaria_equip) values (11,'EN43TG32GH','LG 29POLEGADAS 60Hz','Monitor','Sem avarias'); 
 
-insert into Equipamentos(id_pessoa,num_serie_equip,desc_equip,tipo_equip,avaria_equip) values (12,'STW23E7','Dell Vostro i7 11GEN 32GB RAM SSD 1TB','Notebook','Sem avarias'); 
+insert into Equipamentos(id_pessoa,num_serie_equip,desc_equip,tipo_equip,avaria_equip) values (12,'STW23E7','Dell Vostro i7 11GEN 32GB RAM SSD 1TB','NOTebook','Sem avarias'); 
 
-insert into Equipamentos(id_pessoa,num_serie_equip,desc_equip,tipo_equip,avaria_equip) values (13,'VB34FDZ56','ACER ASPIRE 5 i5 10GEN SSD 256GB 8GB RAM','Notebook','Sem avarias'); 
+insert into Equipamentos(id_pessoa,num_serie_equip,desc_equip,tipo_equip,avaria_equip) values (13,'VB34FDZ56','ACER ASPIRE 5 i5 10GEN SSD 256GB 8GB RAM','NOTebook','Sem avarias'); 
 
-insert into Equipamentos(id_pessoa,num_serie_equip,desc_equip,tipo_equip,avaria_equip) values (14,'495FNVA','Dell Inspiron 3432 i3 5GEN 4GB RAM HDD 500gB','Notebook','Marcas de queda'); 
+insert into Equipamentos(id_pessoa,num_serie_equip,desc_equip,tipo_equip,avaria_equip) values (14,'495FNVA','Dell Inspiron 3432 i3 5GEN 4GB RAM HDD 500gB','NOTebook','Marcas de queda'); 
 
-insert into Equipamentos(id_pessoa,num_serie_equip,desc_equip,tipo_equip,avaria_equip) values (15,'PE034FVCS','Lenovo Thinkpad i7 9GEN 8GB RAM SSD 256GB','Notebook','Sem avarias'); 
+insert into Equipamentos(id_pessoa,num_serie_equip,desc_equip,tipo_equip,avaria_equip) values (15,'PE034FVCS','Lenovo Thinkpad i7 9GEN 8GB RAM SSD 256GB','NOTebook','Sem avarias'); 
 
-insert into Equipamentos(id_pessoa,num_serie_equip,desc_equip,tipo_equip,avaria_equip) values (16,'SMBDLNX','Positivo i3 3GEN 4GB RAM SSD 128GB','Notebook','Manchas no touchpad'); 
+insert into Equipamentos(id_pessoa,num_serie_equip,desc_equip,tipo_equip,avaria_equip) values (16,'SMBDLNX','Positivo i3 3GEN 4GB RAM SSD 128GB','NOTebook','Manchas no touchpad'); 
 
  
 

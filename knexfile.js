@@ -3,16 +3,19 @@
 /**
  * @type { Object.<string, import("knex").Knex.Config> }
  */
+
+require('dotenv').config();
+
 module.exports = {
 
   development: {
     client: 'mysql',
     connection: {
-      host : 'localhost',
+      host : process.env.DB_HOST,
       port : 3306,
-      user : 'remote',
-      password : '12345678',
-      database : 'pi_database'  
+      user : process.env.DB_USER,
+      password : process.env.DB_PASSWORD,
+      database : process.env.DB_NAME
     },
     pool: {
       min: 2,
@@ -23,11 +26,11 @@ module.exports = {
   staging: {
     client: 'mysql',
     connection: {
-      host : 'localhost',
+      host : process.env.DB_HOST,
       port : 3306,
-      user : 'remote',
-      password : '12345678',
-      database : 'pi_database'  
+      user : process.env.DB_USER,
+      password : process.env.DB_PASSWORD,
+      database : process.env.DB_NAME
     },
     pool: {
       min: 2,
@@ -41,11 +44,11 @@ module.exports = {
   production: {
     client: 'mysql',
     connection: {
-      host : 'localhost',
+      host : process.env.DB_HOST,
       port : 3306,
-      user : 'remote',
-      password : '12345678',
-      database : 'pi_database'  
+      user : process.env.DB_USER,
+      password : process.env.DB_PASSWORD,
+      database : process.env.DB_NAME
     },
     pool: {
       min: 2,

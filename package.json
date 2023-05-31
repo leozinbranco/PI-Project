@@ -16,6 +16,7 @@
     "@mui/material": "^5.10.13",
     "@mui/x-data-grid": "^5.17.11",
     "@mui/x-data-grid-generator": "^5.17.11",
+    "dotenv": "^16.1.1",
     "eslint": "8.27.0",
     "eslint-config-next": "13.0.2",
     "knex": "^2.4.2",
