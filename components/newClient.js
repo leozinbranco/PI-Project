@@ -7,6 +7,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
+import { config } from "../config";
 
 export default function NewClient() {
   const [optional, setOptional] = React.useState("");
@@ -92,7 +93,8 @@ export default function NewClient() {
       newClient.inscricao_estad_jurid = inscricaoEstadual;
     }
     console.log("NEW CLIENT", newClient);
-    fetch("http://localhost:3000/api/cliente/insertClient", {
+    console.log("LOCAL HOST", process.env.LOCAL_HOST);
+    fetch(`/api/cliente/insertClient`, {
       method: "POST",
       body: JSON.stringify(newClient),
     });

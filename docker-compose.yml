@@ -1,0 +1,37 @@
+# docker tag pi-project_nextjs:latest leozin122/nextjs-apoioinfo:v1.1
+# docker tag pi-project_nginx:latest leozin122/nginx-apoioinfo:v1.1
+# docker tag pi-project_mysql:latest leozin122/mysql-apoioinfo:v1.1
+
+# docker push mysql-apoioinfo:v1.1
+# docker push nextjs-apoioinfo:v1.1
+# docker push nginx-apoioinfo:v1.1
+
+version: '3.9'
+services:
+  nextjs:
+    image: leozin122/nextjs-apoioinfo:v1.1
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile.nextjs
+    depends_on:
+      - mysql
+  mysql:
+    image: leozin122/mysql-apoioinfo:v1.1
+
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile.mysql
+    ports:
+      - 3306:3306
+    environment:  
+      - MYSQL_ROOT_PASSWORD=12345678
+  nginx:
+    image: leozin122/nginx-apoioinfo:v1.1
+
+    # build: 
+    #   context: ./nginx
+    #   dockerfile: Dockerfile.nginx
+    ports:
+      - 80:80
+    depends_on:
+      - nextjs

@@ -14,6 +14,7 @@ export default function Home() {
   const handleLogin = () => {
     // fetch('')  // TO DO: Utilizar cookies para armazenar login.
     console.log("Clicou");
+    router.push("/home");
   };
 
   return (

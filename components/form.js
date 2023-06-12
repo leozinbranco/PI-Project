@@ -2,6 +2,7 @@ import React from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import styles from "../styles/Form.module.css";
+import { config } from "../config";
 
 export default function Form() {
   const [clientName, setClientName] = React.useState("");
@@ -32,7 +33,7 @@ export default function Form() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    fetch("http://localhost:3000/api/os/new", {
+    fetch(`/api/os/new`, {
       method: "POST",
       body: JSON.stringify({
         nome_cliente: clientName,
@@ -41,11 +42,9 @@ export default function Form() {
         tipo_equip: type,
         equipamento,
       }),
-    }).then((res) => {
-      
-    }).catch((err) => {
-      
-    });
+    })
+      .then((res) => {})
+      .catch((err) => {});
     // Lógica para enviar os dados
   };
 

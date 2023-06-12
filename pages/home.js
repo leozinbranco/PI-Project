@@ -14,7 +14,6 @@ import dataBase from "../dataExample";
 import * as React from "react";
 import Form from "../components/form";
 import NewClient from "../components/newClient";
-
 import Snackbar from "@mui/material/Snackbar";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -23,6 +22,7 @@ import DialogActions from "@mui/material/DialogActions";
 import Alert from "@mui/material/Alert";
 import { useRouter } from "next/router";
 import { setCookie, parseCookies } from "nookies";
+import config from "../config";
 
 import {
   randomCreatedDate,
@@ -124,7 +124,7 @@ export default function Home() {
   };
 
   React.useEffect(() => {
-    fetch("http://localhost:3000/api/getOs/10")
+    fetch(`/api/getOs/10`)
       .then((response) => response.json())
       .then((data) => {
         console.log(">>>", data);

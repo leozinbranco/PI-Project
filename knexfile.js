@@ -4,59 +4,57 @@
  * @type { Object.<string, import("knex").Knex.Config> }
  */
 
-require('dotenv').config();
-
+const config = require("./config");
+console.log(">>>", config.env.host);
 module.exports = {
-
   development: {
-    client: 'mysql',
+    client: "mysql",
     connection: {
-      host : process.env.DB_HOST,
-      port : 3306,
-      user : process.env.DB_USER,
-      password : process.env.DB_PASSWORD,
-      database : process.env.DB_NAME
+      host: config.env.host,
+      port: 3306,
+      user: config.env.user,
+      password: config.env.password,
+      database: config.env.database,
     },
     pool: {
       min: 2,
-      max: 10
+      max: 10,
     },
   },
 
   staging: {
-    client: 'mysql',
+    client: "mysql",
     connection: {
-      host : process.env.DB_HOST,
-      port : 3306,
-      user : process.env.DB_USER,
-      password : process.env.DB_PASSWORD,
-      database : process.env.DB_NAME
+      host: config.env.host,
+      port: 3306,
+      user: config.env.user,
+      password: config.env.password,
+      database: config.env.database,
     },
     pool: {
       min: 2,
-      max: 10
+      max: 10,
     },
     migrations: {
-      tableName: 'knex_migrations'
-    }
+      tableName: "knex_migrations",
+    },
   },
 
   production: {
-    client: 'mysql',
+    client: "mysql",
     connection: {
-      host : process.env.DB_HOST,
-      port : 3306,
-      user : process.env.DB_USER,
-      password : process.env.DB_PASSWORD,
-      database : process.env.DB_NAME
+      host: config.env.host,
+      port: 3306,
+      user: config.env.user,
+      password: config.env.password,
+      database: config.env.database,
     },
     pool: {
       min: 2,
-      max: 10
+      max: 10,
     },
     migrations: {
-      tableName: 'knex_migrations'
-    }
-  }
-
+      tableName: "knex_migrations",
+    },
+  },
 };
