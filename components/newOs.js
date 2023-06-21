@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import styles from "../styles/Form.module.css";
 import { config } from "../config";
 
-export default function Form() {
+export default function Form({ handleNewOs }) {
   const [clientName, setClientName] = React.useState("");
   const [type, setType] = React.useState("");
   const [numSerie, setNumSerie] = React.useState("");
@@ -32,20 +32,19 @@ export default function Form() {
   };
 
   const handleSubmit = (event) => {
-    event.preventDefault();
-    fetch(`/api/os/new`, {
-      method: "POST",
-      body: JSON.stringify({
-        nome_cliente: clientName,
-        desc_servico_OS: situation,
-        num_serie_equip: numSerie,
-        tipo_equip: type,
-        equipamento,
-      }),
-    })
-      .then((res) => {})
-      .catch((err) => {});
-    // Lógica para enviar os dados
+    console.log(">>>>>>>>>>>>> HANDLER SUBMIT");
+    handleNewOs({
+      nome_cliente: clientName,
+      desc_servico_OS: situation,
+      num_serie_equip: numSerie,
+      tipo_equip: type,
+      equipamento,
+    });
+    setEquipamento("");
+    setSituation("");
+    setNumSerie("");
+    setType("");
+    setClientName("");
   };
 
   return (
@@ -96,12 +95,7 @@ export default function Form() {
               className={styles.spaceTextFieldTwoLines}
             />
           </div>
-          <Button
-            type="submit"
-            size="large"
-            onClick={handleSubmit}
-            variant="contained"
-          >
+          <Button size="large" onClick={handleSubmit} variant="contained">
             ENVIAR
           </Button>
         </div>

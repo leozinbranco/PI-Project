@@ -2,8 +2,13 @@
 const knex = require("../../../db/db");
 export default async function handler(req, res) {
   // const nomeCliente = "[NOME DO CLIENTE]";
+  // console.log("###########################", req);
+  console.log("NNTESSS---BODY###");
+
   if (req.method === "POST") {
     const bodyParams = JSON.parse(req.body);
+    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>BODY###", bodyParams);
+
     const {
       nome_cliente,
       equipamento,
@@ -19,7 +24,7 @@ export default async function handler(req, res) {
         .first();
       if (!pessoa) {
         console.log("Pessoa não encontrada");
-        return;
+        return res.status(500).json({ error: "Pesssoa não encontrada" });
       }
 
       // Inserir dados na tabela Equipamento
@@ -46,6 +51,7 @@ export default async function handler(req, res) {
 
       res.status(200).json("Operações concluídas com sucesso");
     } catch (error) {
+      console.log(error);
       res.status(500).json(JSON.stringify(error));
     } finally {
       knex.destroy();

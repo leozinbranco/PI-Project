@@ -8,11 +8,10 @@ import ListItemText from "@mui/material/ListItemText";
 import DialogContentText from "@mui/material/DialogContentText";
 import { DataGrid, GridToolbar, GridFilterItem } from "@mui/x-data-grid";
 import Divider from "@mui/material/Divider";
-import { Typography } from "@mui/material";
 import Image from "next/image";
 import dataBase from "../dataExample";
 import * as React from "react";
-import Form from "../components/form";
+import Form from "../components/newOs";
 import NewClient from "../components/newClient";
 import Snackbar from "@mui/material/Snackbar";
 import Dialog from "@mui/material/Dialog";
@@ -23,6 +22,9 @@ import Alert from "@mui/material/Alert";
 import { useRouter } from "next/router";
 import { setCookie, parseCookies } from "nookies";
 import config from "../config";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
 
 import {
   randomCreatedDate,
@@ -103,6 +105,17 @@ const useFakeMutation = () => {
   );
 };
 
+const styleModal = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  boxShadow: 24,
+  p: 4,
+};
+
 export default function Home() {
   const mutateRow = useFakeMutation();
   const noButtonRef = React.useRef(null);
@@ -113,53 +126,80 @@ export default function Home() {
   const router = useRouter();
   const [open, setOpen] = React.useState(false);
   const [snackbar, setSnackbar] = React.useState(null);
+  const [newOs, setNewOs] = React.useState(null);
+  const [newClient, setNewClient] = React.useState(null);
+  const [title, setTitle] = React.useState("");
+  const [desc, setDesc] = React.useState("");
 
   const handleCloseSnackbar = () => setSnackbar(null);
 
-  const handleOpenDialog = () => {
+  const handleOpenDialog = (title, desc) => {
+    setTitle(title);
+    setDesc(desc);
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
   };
+  async function fetchData() {
+    await fetch(`/api/getOs/10`).then(async (data) => {
+      const response = await data.json();
+      console.log("DATABASE#$$$$$$$$$$$$$$4>>>", response);
+      setDataOs(response);
+      // console.log("DATABASE#$$$$$$$$$$$$$$4>>>", dataOs);
+    });
+  }
+  React.useEffect(() => {
+    fetchData();
+  }, []);
 
   React.useEffect(() => {
-    fetch(`/api/getOs/10`)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(">>>", data);
-        setDataOs(data);
-      });
-  }, [dataBase]);
+    console.log("######################@@@@@@@@@@@@@@@@@@@ ", newClient);
 
-  const handleNo = () => {
-    const { oldRow, resolve } = promiseArguments;
-    resolve(oldRow); // Resolve with the old row to not update the internal state
-    setPromiseArguments(null);
-  };
-
-  const handleYes = async () => {
-    const { newRow, oldRow, reject, resolve } = promiseArguments;
-
-    try {
-      // Make the HTTP request to save in the backend
-      const response = await mutateRow(newRow);
-      setSnackbar({ children: "User successfully saved", severity: "success" });
-      resolve(response);
-      setPromiseArguments(null);
-    } catch (error) {
-      setSnackbar({ children: "Name can't be empty", severity: "error" });
-      reject(oldRow);
-      setPromiseArguments(null);
+    async function postNewClient() {
+      console.log("NEW Client<>", newClient);
+      await fetch(`/api/cliente/insertClient`, {
+        method: "POST",
+        body: JSON.stringify(newClient),
+      })
+        .then((res) => {
+          // console.log("RES>>", res);
+          console.log("CHEGOU NESSE IF!!");
+          if (res.status === 200) {
+            handleOpenDialog("Sucesso!", "Cliente cadastrado!");
+          } else {
+            handleOpenDialog("Erro!", "Não foi possível cadastrar o cliente!");
+          }
+        })
+        .catch((err) => {});
     }
-  };
+    if (newClient) postNewClient();
+  }, [newClient]);
 
-  const handleEntered = () => {
-    // The `autoFocus` is not used because, if used, the same Enter that saves
-    // the cell triggers "No". Instead, we manually focus the "No" button once
-    // the dialog is fully open.
-    // noButtonRef.current?.focus();
-  };
+  React.useEffect(() => {
+    async function postNewOs() {
+      console.log("NEW Os<>", newOs);
+      await fetch(`/api/os/new`, {
+        method: "POST",
+        body: JSON.stringify(newOs),
+      })
+        .then((res) => {
+          // console.log("RES>>", res);
+          if (res.status === 200) {
+            handleOpenDialog("Sucesso!", "Nova OS Cadastrada!");
+          } else {
+            handleOpenDialog("Erro!", "Cliente não encontrado!");
+          }
+        })
+        .catch((err) => {});
+    }
+    console.log(newOs);
+    console.log("EXECUTOU?");
+    if (newOs) {
+      console.log("SSS");
+      postNewOs();
+    }
+  }, [newOs]);
 
   const renderConfirmDialog = () => {
     if (!promiseArguments) {
@@ -179,10 +219,7 @@ export default function Home() {
           {"\nVocẽ tem certeza que deseja editar esse campo?\n"}
         </DialogContent>
         <DialogActions>
-          <Button ref={noButtonRef} onClick={handleNo}>
-            No
-          </Button>
-          <Button onClick={handleYes}>Yes</Button>
+          <Button onClick={handleClose}>Ok</Button>
         </DialogActions>
       </Dialog>
     );
@@ -192,23 +229,23 @@ export default function Home() {
     <main className={styles.page}>
       {/* <div className={styles.floatContainer}> */}
       <div className={styles.menuContainer}>
-        <Dialog
-          open={open}
-          // TransitionComponent={Transition}
-          keepMounted
-          onClose={handleClose}
-          aria-describedby="alert-dialog-slide-description"
-        >
-          <DialogTitle>{"Use Google's location service?"}</DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-slide-description">
-              OS Inserida com sucesso!
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose}>OK</Button>
-          </DialogActions>
-        </Dialog>
+        <Modal open={open} onClose={handleClose}>
+          <Box sx={styleModal}>
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+              {title}
+            </Typography>
+            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+              {desc}
+            </Typography>
+            <Button
+              ref={noButtonRef}
+              style={{ marginTop: "30px" }}
+              onClick={handleClose}
+            >
+              Ok
+            </Button>
+          </Box>
+        </Modal>
         <Image
           src="/Personal data-rafiki.svg"
           alt="Perfil image"
@@ -224,13 +261,14 @@ export default function Home() {
                 onClick={() => {
                   setChangeTabNewOs(false);
                   setChangeTabNewUser(false);
+                  fetchData();
                 }}
               >
                 <ListItemText
                   style={{ color: "#FFFFF" }}
                   primary={
                     <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                      Listar Ordens
+                      Listar ordens
                     </Typography>
                   }
                 />
@@ -247,7 +285,7 @@ export default function Home() {
                   style={{ color: "#FFFFF" }}
                   primary={
                     <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                      Criar Nova Ordem
+                      Criar nova ordem
                     </Typography>
                   }
                 />
@@ -264,7 +302,7 @@ export default function Home() {
                 <ListItemText
                   primary={
                     <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                      Cadastrar usuário
+                      Cadastrar cliente
                     </Typography>
                   }
                 />
@@ -314,7 +352,11 @@ export default function Home() {
                     flexDirection: "column",
                   }}
                 >
-                  {changeTabNewOS ? <Form /> : <NewClient />}
+                  {changeTabNewOS ? (
+                    <Form handleNewOs={setNewOs} />
+                  ) : (
+                    <NewClient handleNewClient={setNewClient} />
+                  )}
                 </div>
               </div>
             </div>

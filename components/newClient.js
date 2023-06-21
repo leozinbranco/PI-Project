@@ -9,7 +9,7 @@ import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
 import { config } from "../config";
 
-export default function NewClient() {
+export default function NewClient({ handleNewClient }) {
   const [optional, setOptional] = React.useState("");
   const [nome, setNome] = React.useState("");
   const [telefone, setTelefone] = React.useState("");
@@ -20,21 +20,27 @@ export default function NewClient() {
   const [inscricaoEstadual, setInscricaoEstadual] = React.useState("");
   const [endereco, setEndereco] = React.useState("");
   // const [cpfCnpj, setCpfCnpj] = React.useState("");
-
   // insert into Pessoa(nome_pessoa,telefone_pessoa,email_pessoa,endereco_pessoa) values ('João da Silva', '19980015420', 'joãodasilva@fatec.sp.gov.br','Rua das Dores 531, Cambuí - CEP 13871-001');
-
   // insert into Clientes(id_pessoa,flag_contrato_cliente) values (11,0);
-
   // insert into Fisica(id_pessoa,cpf_fisica,Sexo) values (11,'61981997032','M');
-
   // insert into Pessoa(nome_pessoa,telefone_pessoa,email_pessoa,endereco_pessoa) values ('Guru da bet Eireli', '1938543232', 'SAC@guruapostas.com.br','Rua das perdições 35, Taquaral - CEP 13571-015');
-
   // insert into Clientes(id_pessoa,flag_contrato_cliente) values (12,1);
-
   // insert into Juridica(id_pessoa,cnpj_juridica,nome_fantasia_jurid,inscricao_estad_jurid) values (12, '46583065000108', 'Guru das Apostas esportivas', '901292801201');
 
   const handleChange = (event) => {
     setOptional(event.target.value);
+  };
+
+  const clearAll = () => {
+    setOptional("");
+    setNome("");
+    setTelefone("");
+    setEmail("");
+    setCpfCnpj("");
+    setInscricaoEstadual("");
+    setSexo("");
+    setNomeFantasia("");
+    setEndereco("");
   };
 
   const handleChangeName = (event) => {
@@ -69,7 +75,7 @@ export default function NewClient() {
     setEndereco(event.target.value);
   };
 
-  const sendNewClient = () => {
+  const sendNewClient = async () => {
     const newClient = {
       nome_pessoa: nome,
       telefone_pessoa: telefone,
@@ -92,12 +98,8 @@ export default function NewClient() {
       newClient.nome_fantasia_jurid = nomeFantasia;
       newClient.inscricao_estad_jurid = inscricaoEstadual;
     }
-    console.log("NEW CLIENT", newClient);
-    console.log("LOCAL HOST", process.env.LOCAL_HOST);
-    fetch(`/api/cliente/insertClient`, {
-      method: "POST",
-      body: JSON.stringify(newClient),
-    });
+    handleNewClient(newClient);
+    clearAll();
   };
 
   return (
@@ -115,6 +117,7 @@ export default function NewClient() {
               variant="outlined"
               className={styles.spaceTextFieldTwoLines}
               onChange={handleChangeName}
+              value={nome}
             ></TextField>
           </div>
           <div className={styles.formFirstLine}>
@@ -122,6 +125,7 @@ export default function NewClient() {
               label="Telefone"
               variant="outlined"
               onChange={handleChangeTel}
+              value={telefone}
               className={styles.spaceTextFieldTwoLines}
             ></TextField>
             <TextField
@@ -129,6 +133,7 @@ export default function NewClient() {
               variant="outlined"
               onChange={handleChangeEmail}
               className={styles.intireLine}
+              value={email}
             ></TextField>
           </div>
           <div className={styles.formFirstLine}>
@@ -137,6 +142,7 @@ export default function NewClient() {
               variant="outlined"
               className={styles.spaceTextFieldTwoLines}
               onChange={handleChangeEndereco}
+              value={endereco}
             ></TextField>
           </div>
           <div className={styles.dropdown}>
@@ -164,6 +170,7 @@ export default function NewClient() {
                   variant="outlined"
                   onChange={handleChangeCpfCnpj}
                   className={styles.spaceTextFieldTwoLines}
+                  value={cpfCnpj}
                 ></TextField>
               </div>
               <div className={styles.formFirstLine}>
@@ -172,6 +179,7 @@ export default function NewClient() {
                   variant="outlined"
                   onChange={handleChangeSexo}
                   className={styles.spaceTextFieldTwoLines}
+                  value={sexo}
                 ></TextField>
               </div>
             </div>
@@ -182,6 +190,7 @@ export default function NewClient() {
                   label="CNPJ"
                   variant="outlined"
                   onChange={handleChangeCpfCnpj}
+                  value={cpfCnpj}
                   className={styles.spaceTextFieldTwoLines}
                 ></TextField>
               </div>
@@ -189,12 +198,14 @@ export default function NewClient() {
                 <TextField
                   label="Nome Fantasia"
                   variant="outlined"
+                  value={nomeFantasia}
                   onChange={handleChangeInscricaoEstadual}
                   className={styles.spaceTextFieldTwoLines}
                 ></TextField>
                 <TextField
                   label="Inscrição estadual"
                   variant="outlined"
+                  value={inscricaoEstadual}
                   onChange={handleChangeNomeFantasia}
                   className={styles.spaceTextFieldTwoLines}
                 ></TextField>

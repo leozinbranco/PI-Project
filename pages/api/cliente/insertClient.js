@@ -23,7 +23,7 @@ export default async function handler(req, res) {
     };
     var idPessoa;
 
-    console.log(req);
+    // console.log(req);
     await knex("Pessoa")
       .insert(dadosPessoa)
       .then((ids) => {
@@ -64,11 +64,11 @@ export default async function handler(req, res) {
         }
       })
       .then(() => {
-        console.log("Inserções concluídas com sucesso!");
+        res.status(200).json("Inserções concluídas com sucesso!");
         knex.destroy();
       })
       .catch((error) => {
-        console.error("Erro ao realizar as inserções:", error);
+        res.status(500).json(JSON.stringify(error));
         knex.destroy();
       });
   }
