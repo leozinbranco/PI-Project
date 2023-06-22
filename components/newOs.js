@@ -82,6 +82,7 @@ export default function Form({ handleNewOs }) {
               label="Nº de Série"
               variant="outlined"
               value={numSerie}
+              type="number"
               onChange={handleChangeNumSerie}
               className={styles.intireLine}
             />

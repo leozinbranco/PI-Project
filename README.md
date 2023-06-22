@@ -20,6 +20,10 @@ Aqui estão as etapas para configurar o ambiente de desenvolvimento do projeto:
 
 1. Certifique-se de ter o Node.js instalado em sua máquina. Você pode baixar a versão mais recente do Node.js no site oficial: [https://nodejs.org](https://nodejs.org)
 
+Você também precisará do gerenciador de pacotes yarn, que pode ser instalado no site oficial: [https://classic.yarnpkg.com/lang/en/docs/install/#debian-stable](https://classic.yarnpkg.com/lang/en/docs/install/#debian-stable)
+
+
+
 2. Clone o repositório do projeto para sua máquina local utilizando o seguinte comando no terminal:
 
 ```

@@ -19,6 +19,16 @@ export default function NewClient({ handleNewClient }) {
   const [nomeFantasia, setNomeFantasia] = React.useState("");
   const [inscricaoEstadual, setInscricaoEstadual] = React.useState("");
   const [endereco, setEndereco] = React.useState("");
+  const validations = {
+    nome: false,
+    telefone: false,
+    email: false,
+    cpfCnpj: false,
+    sexo: false,
+    nomeFantasia: false,
+    inscricaoEstadual: false,
+    endereco: false,
+  };
   // const [cpfCnpj, setCpfCnpj] = React.useState("");
   // insert into Pessoa(nome_pessoa,telefone_pessoa,email_pessoa,endereco_pessoa) values ('João da Silva', '19980015420', 'joãodasilva@fatec.sp.gov.br','Rua das Dores 531, Cambuí - CEP 13871-001');
   // insert into Clientes(id_pessoa,flag_contrato_cliente) values (11,0);
@@ -75,7 +85,27 @@ export default function NewClient({ handleNewClient }) {
     setEndereco(event.target.value);
   };
 
+  const checkEmpty = () => {
+    let numberOfInvalidFields = 0;
+    validations.nome = nome.length > 1;
+    validations.telefone = telefone.length > 1;
+    validations.email = email.length > 1;
+    validations.cpfCnpj = cpfCnpj.length > 1;
+    validations.sexo = sexo.length > 1;
+    validations.nomeFantasia = nomeFantasia.length > 1;
+    validations.inscricaoEstadual = inscricaoEstadual.length > 1;
+    validations.endereco = endereco.length > 1;
+
+    for (const validation in validations) {
+      if (this.validations[validation]) {
+        numberOfInvalidFields++;
+      }
+    }
+    return numberOfInvalidFields === 0;
+  };
+
   const sendNewClient = async () => {
+    // if (this.checkEmpty()) {
     const newClient = {
       nome_pessoa: nome,
       telefone_pessoa: telefone,
@@ -100,6 +130,9 @@ export default function NewClient({ handleNewClient }) {
     }
     handleNewClient(newClient);
     clearAll();
+    // } else {
+
+    // }
   };
 
   return (
@@ -123,6 +156,7 @@ export default function NewClient({ handleNewClient }) {
           <div className={styles.formFirstLine}>
             <TextField
               label="Telefone"
+              type="tel"
               variant="outlined"
               onChange={handleChangeTel}
               value={telefone}
@@ -130,6 +164,7 @@ export default function NewClient({ handleNewClient }) {
             ></TextField>
             <TextField
               label="Email"
+              type="email"
               variant="outlined"
               onChange={handleChangeEmail}
               className={styles.intireLine}
@@ -188,6 +223,7 @@ export default function NewClient({ handleNewClient }) {
               <div className={styles.formFirstLine}>
                 <TextField
                   label="CNPJ"
+                  type="number"
                   variant="outlined"
                   onChange={handleChangeCpfCnpj}
                   value={cpfCnpj}
@@ -198,15 +234,17 @@ export default function NewClient({ handleNewClient }) {
                 <TextField
                   label="Nome Fantasia"
                   variant="outlined"
+                  required={true}
                   value={nomeFantasia}
-                  onChange={handleChangeInscricaoEstadual}
+                  onChange={handleChangeNomeFantasia}
                   className={styles.spaceTextFieldTwoLines}
                 ></TextField>
                 <TextField
                   label="Inscrição estadual"
                   variant="outlined"
                   value={inscricaoEstadual}
-                  onChange={handleChangeNomeFantasia}
+                  type="number"
+                  onChange={handleChangeInscricaoEstadual}
                   className={styles.spaceTextFieldTwoLines}
                 ></TextField>
               </div>

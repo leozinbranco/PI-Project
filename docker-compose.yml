@@ -9,7 +9,7 @@
 version: '3.9'
 services:
   nextjs:
-    image: leozin122/nextjs-apoioinfo:v1.1
+    image: leozin122/nextjs-apoioinfo:2.2
     # build:
     #   context: .
     #   dockerfile: Dockerfile.nextjs
