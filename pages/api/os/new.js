@@ -44,7 +44,7 @@ export default async function handler(req, res) {
             num_serie_equip: num_serie_equip,
             date_inicio_OS: new Date(),
             desc_servico_OS: desc_servico_OS,
-            stts_andamento_OS: "ORÇAMENTO",
+            stts_andamento_OS: desc_servico_OS,
             matricula_func: 1011,
           });
         });

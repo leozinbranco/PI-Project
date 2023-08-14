@@ -70,7 +70,7 @@ const columns = [
     editable: true,
   },
   {
-    field: "date_fim_OS",
+    field: "data_ult_update_OS",
     headerName: "Ultima modificação",
     width: 150,
     editable: true,

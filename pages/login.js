@@ -8,13 +8,26 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useRouter } from "next/router";
 import styles from "../styles/Login.module.css";
 import { style } from "@mui/system";
+import * as React from "react";
 
 export default function Home() {
   const router = useRouter();
+  const [user, setUser] = React.useState("");
+  const [senha, setSenha] = React.useState("");
+
   const handleLogin = () => {
     // fetch('')  // TO DO: Utilizar cookies para armazenar login.
-    console.log("Clicou");
-    router.push("/home");
+    console.log("LOGIN");
+    if (user === "admin" && senha === "1234") router.push("/home");
+    else alert("Informações inválidas!");
+  };
+
+  const handleChangeSenha = (event) => {
+    setSenha(event.target.value);
+  };
+
+  const handleChangeUser = (event) => {
+    setUser(event.target.value);
   };
 
   return (
@@ -53,10 +66,14 @@ export default function Home() {
             <TextField
               label="Login"
               className={styles.textFieldLogin}
+              value={user}
+              onChange={handleChangeUser}
             ></TextField>
             <TextField
               type="password"
               label="Senha"
+              value={senha}
+              onChange={handleChangeSenha}
               className={styles.textFieldPassword}
             ></TextField>
             <div

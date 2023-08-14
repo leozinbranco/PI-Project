@@ -9,8 +9,17 @@ import { useRouter } from "next/router";
 import styles from "../styles/Login.module.css";
 import { style } from "@mui/system";
 
+// TO DO: EXCLUIR ESSA PAG
 export default function Home() {
   const router = useRouter();
+  // const [user, setUser] = React.useState("");
+  // const [senha, setSenha] = React.useState("");
+
+  const handlerLogin = () => {
+    console.log("LOGIN>>");
+    // if (user === "admin" && senha === "1234") router.push("/home");
+    // else alert("Informações inválidas!");
+  };
   return (
     <div className={styles.container}>
       <div style={{ minWidth: "40%", backgroundColor: "#0013FF" }}>
@@ -64,7 +73,7 @@ export default function Home() {
               }}
             >
               <Button
-                onClick={() => router.push("/home")}
+                onClick={handlerLogin}
                 style={{
                   display: "flex",
                   justifyContent: "center",

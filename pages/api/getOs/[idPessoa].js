@@ -16,6 +16,7 @@ export default async function handler(req, res) {
       "os.stts_andamento_OS",
       "os.date_inicio_OS",
       "os.date_fim_OS",
+      "os.data_ult_update_OS",
       "f.ramal_func",
       "f.email_func"
     )

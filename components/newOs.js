@@ -78,7 +78,7 @@ export default function Form({ handleNewOs }) {
               onChange={handleChangeType}
               className={styles.spaceTextFieldTwoLines}
             />
-            <TextField
+            <TextField  
               label="Nº de Série"
               variant="outlined"
               value={numSerie}
