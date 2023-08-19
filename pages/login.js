@@ -18,8 +18,9 @@ export default function Home() {
   const handleLogin = () => {
     // fetch('')  // TO DO: Utilizar cookies para armazenar login.
     console.log("LOGIN");
-    if (user === "admin" && senha === "1234") router.push("/home");
-    else alert("Informações inválidas!");
+    router.push("/home");
+    // if (user === "admin" && senha === "1234") router.push("/home");
+    // else alert("Informações inválidas!");
   };
 
   const handleChangeSenha = (event) => {
