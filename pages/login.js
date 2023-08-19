@@ -11,7 +11,7 @@ import { style } from "@mui/system";
 import * as React from "react";
 
 export default function Home() {
-  const router = useRouter();s
+  const router = useRouter();
   const [user, setUser] = React.useState("");
   const [senha, setSenha] = React.useState("");
 
