@@ -1,6 +1,6 @@
 import * as React from "react";
 import TextField from "@mui/material/TextField";
-import styles from "../styles/Form.module.css";
+import styles from "../public/styles/Form.module.css";
 import Button from "@mui/material/Button";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";

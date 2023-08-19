@@ -28,5 +28,10 @@
     "react-dom": "18.2.0",
     "sqlite3": "^5.1.6"
   },
+  "browser": {
+    "fs": false,
+    "os": false,
+    "path": false
+  },
   "packageManager": "yarn@3.6.0"
 }

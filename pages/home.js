@@ -1,4 +1,4 @@
-import styles from "../styles/Home.module.css";
+import styles from "../public/styles/Home.module.css";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import List from "@mui/material/List";
@@ -142,7 +142,7 @@ export default function Home() {
     setOpen(false);
   };
   async function fetchData() {
-    await fetch(`/api/getOs/10`).then(async (data) => {
+    await fetch(`/api/serviceOrder/10`).then(async (data) => {
       const response = await data.json();
       console.log("DATABASE#$$$$$$$$$$$$$$4>>>", response);
       setDataOs(response);
@@ -158,7 +158,7 @@ export default function Home() {
 
     async function postNewClient() {
       console.log("NEW Client<>", newClient);
-      await fetch(`/api/cliente/insertClient`, {
+      await fetch(`/api/client/insertClient`, {
         method: "POST",
         body: JSON.stringify(newClient),
       })
@@ -179,7 +179,7 @@ export default function Home() {
   React.useEffect(() => {
     async function postNewOs() {
       console.log("NEW Os<>", newOs);
-      await fetch(`/api/os/new`, {
+      await fetch(`/api/serviceOrder/new`, {
         method: "POST",
         body: JSON.stringify(newOs),
       })
@@ -247,7 +247,7 @@ export default function Home() {
           </Box>
         </Modal>
         <Image
-          src="/Personal data-rafiki.svg"
+          src="/img/Personal data-rafiki.svg"
           alt="Perfil image"
           width={200}
           height={200}

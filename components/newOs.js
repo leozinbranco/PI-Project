@@ -1,7 +1,7 @@
 import React from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import styles from "../styles/Form.module.css";
+import styles from "../public/styles/Form.module.css";
 import { config } from "../config";
 
 export default function Form({ handleNewOs }) {
